@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "cli"
-version = "0.1.0"
+name = "liting-cli"
+version = "0.0.0"
