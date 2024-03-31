@@ -1,5 +1,5 @@
 [package]
-name = "liting-cli"
+name = "liting"
 version = "0.0.0"
 authors = ["liting-yes <luz.liting@gmail.com>"]
 edition = "2021"
