@@ -2,6 +2,12 @@
 
 A cli tool for improve efficiency
 
+## Installation
+
+```bash
+cargo install liting
+```
+
 ## Commit
 
 Inspired
