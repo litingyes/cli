@@ -11,3 +11,4 @@ keywords = ["cli"]
 
 [dependencies]
 clap = { version = "4.5.4", features = ["derive"] }
+inquire = "0.7.4"
