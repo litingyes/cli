@@ -1,22 +1,11 @@
 use inquire::{Select, Text};
 use std::fmt::{Display, Formatter};
+use std::process::Command;
 
 struct CommitMessage {
     r#type: String,
     scope: String,
     subject: String,
-}
-
-impl Display for CommitMessage {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        writeln!(f, "Commit Message:").expect("Error: display CommitMessage");
-        writeln!(f, "type: {}", self.r#type).expect("Error: display type filed in CommitMessage");
-        writeln!(f, "scope: {}", self.scope).expect("Error: display scope filed in CommitMessage");
-        writeln!(f, "subject: {}", self.subject)
-            .expect("Error: display subject filed in CommitMessage");
-
-        Ok(())
-    }
 }
 
 impl CommitMessage {
@@ -35,8 +24,29 @@ impl CommitMessage {
     fn set_scope(&mut self, value: String) {
         self.scope = value
     }
+
     fn set_subject(&mut self, value: String) {
         self.subject = value
+    }
+
+    fn to_string(&self) -> String {
+        if self.scope.trim().is_empty() {
+            format!("{}: {}", self.r#type, self.subject)
+        } else {
+            format!("{}({}): {}", self.r#type, self.scope, self.subject)
+        }
+    }
+}
+
+impl Display for CommitMessage {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        writeln!(f, "Commit Message:").expect("Error: display CommitMessage");
+        writeln!(f, "type: {}", self.r#type).expect("Error: display type filed in CommitMessage");
+        writeln!(f, "scope: {}", self.scope).expect("Error: display scope filed in CommitMessage");
+        writeln!(f, "subject: {}", self.subject)
+            .expect("Error: display subject filed in CommitMessage");
+
+        Ok(())
     }
 }
 
@@ -75,4 +85,13 @@ pub fn handle_commit() {
     }
 
     println!("{}", commit_message);
+    println!("{}", commit_message.to_string());
+
+    let output = Command::new("git")
+        .arg("commit")
+        .arg("-m")
+        .status()
+        .expect("Commit failed");
+
+    println!("{}", output)
 }
