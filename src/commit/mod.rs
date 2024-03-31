@@ -1,5 +1,5 @@
 use console::style;
-use inquire::{Select, Text};
+use inquire::{required, Select, Text};
 use std::fmt::{Display, Formatter};
 use std::process::Command;
 
@@ -58,7 +58,7 @@ pub fn handle_commit() {
         "feat", "fix", "docs", "style", "refactor", "perf", "test", "build", "cli", "chore",
         "revert",
     ];
-    let r#type = Select::new("Select the type of change that you're committing", types).prompt();
+    let r#type = Select::new("Select the type of change that you're committing: ", types).prompt();
     match r#type {
         Ok(r#type) => {
             commit_message.set_type(r#type.to_string());
@@ -69,7 +69,7 @@ pub fn handle_commit() {
     }
 
     let scope =
-        Text::new("What is the scope of this change (e.g. component or file name)").prompt();
+        Text::new("What is the scope of this change (e.g. component or file name): ").prompt();
     match scope {
         Ok(scope) => commit_message.set_scope(scope),
         Err(_) => {
@@ -77,7 +77,11 @@ pub fn handle_commit() {
         }
     }
 
-    let subject = Text::new("Write a short, imperative tense description of the change").prompt();
+    let subject = Text::new("Write a short, imperative tense description of the change: ")
+        .with_validator(required!(style("Subject cannot be empty.")
+            .yellow()
+            .to_string()))
+        .prompt();
     match subject {
         Ok(subject) => commit_message.set_subject(subject),
         Err(_) => {
