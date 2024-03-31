@@ -1,3 +1,4 @@
+use console::style;
 use inquire::{Select, Text};
 use std::fmt::{Display, Formatter};
 use std::process::Command;
@@ -84,14 +85,19 @@ pub fn handle_commit() {
         }
     }
 
-    println!("{}", commit_message);
-    println!("{}", commit_message.to_string());
-
     let output = Command::new("git")
         .arg("commit")
         .arg("-m")
+        .arg(commit_message.to_string())
         .status()
         .expect("Commit failed");
 
-    println!("{}", output)
+    if output.success() {
+        println!(
+            "Git commit success: {}",
+            style(commit_message.to_string()).green()
+        );
+    } else {
+        println!("Git commit failed: {}", style(output).red());
+    }
 }
