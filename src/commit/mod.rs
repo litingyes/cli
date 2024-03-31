@@ -78,9 +78,7 @@ pub fn handle_commit() {
     }
 
     let subject = Text::new("Write a short, imperative tense description of the change: ")
-        .with_validator(required!(style("Subject cannot be empty.")
-            .yellow()
-            .to_string()))
+        .with_validator(required!("Subject cannot be empty."))
         .prompt();
     match subject {
         Ok(subject) => commit_message.set_subject(subject),
