@@ -1,5 +1,6 @@
-use clap::{command, Parser, Subcommand};
+use clap::{arg, command, Parser, Subcommand};
 mod commit;
+mod config;
 
 #[derive(Parser)]
 #[command(version, author, about)]
@@ -14,6 +15,11 @@ struct Cli {
 #[derive(Subcommand)]
 enum Commands {
     Commit {},
+
+    Config {
+        #[arg(long, short)]
+        list: bool,
+    },
 }
 
 fn main() {
@@ -22,6 +28,11 @@ fn main() {
     match &cli.command {
         Some(Commands::Commit {}) => {
             commit::handle_commit();
+        }
+        Some(Commands::Config { list }) => {
+            if *list {
+                config::list_config()
+            }
         }
         None => {}
     }
