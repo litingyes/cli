@@ -45,37 +45,40 @@ fn get_global_config() -> Result<DocumentMut, ()> {
 }
 
 fn get_local_config() -> Result<DocumentMut, ()> {
-    if let Some(local_config_dir) = env::current_dir() {
-        let mut path_buf = PathBuf::new();
-        path_buf.push(local_config_dir);
-        path_buf.push(CONFIG_FILE);
-        let local_config_file_path = path_buf.as_path();
-        println!(
-            "The local config file path: {}",
-            style(local_config_file_path.to_string_lossy()).yellow()
-        );
+    match env::current_dir() {
+        Ok(local_config_dir) => {
+            let mut path_buf = PathBuf::new();
+            path_buf.push(local_config_dir);
+            path_buf.push(CONFIG_FILE);
+            let local_config_file_path = path_buf.as_path();
+            println!(
+                "The local config file path: {}",
+                style(local_config_file_path.to_string_lossy()).yellow()
+            );
 
-        if local_config_file_path.exists() {
-            match fs::read_to_string(local_config_file_path) {
-                Ok(local_config_str) => {
-                    let local_config = local_config_str
-                        .parse::<DocumentMut>()
-                        .expect("invalid local config.");
+            if local_config_file_path.exists() {
+                match fs::read_to_string(local_config_file_path) {
+                    Ok(local_config_str) => {
+                        let local_config = local_config_str
+                            .parse::<DocumentMut>()
+                            .expect("invalid local config.");
 
-                    Ok(local_config)
+                        Ok(local_config)
+                    }
+                    Err(e) => {
+                        eprintln!("Error read local config file: {}.", e);
+                        Err(())
+                    }
                 }
-                Err(e) => {
-                    eprintln!("Error read local config file: {}.", e);
-                    Err(())
-                }
+            } else {
+                println!("Cannot find existing local config file.");
+                Err(())
             }
-        } else {
-            println!("Cannot find existing local config file.");
+        }
+        Err(_e) => {
+            eprintln!("Error read global config file.");
             Err(())
         }
-    } else {
-        eprintln!("Error read global config file.");
-        Err(())
     }
 }
 
