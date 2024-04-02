@@ -55,7 +55,7 @@ pub fn handle_commit() {
     let mut commit_message = CommitMessage::new();
 
     let types: Vec<&str> = vec![
-        "feat", "fix", "docs", "style", "refactor", "perf", "test", "build", "cli", "chore",
+        "feat", "fix", "docs", "style", "refactor", "perf", "test", "build", "ci", "chore",
         "revert",
     ];
     let r#type = Select::new("Select the type of change that you're committing: ", types).prompt();
