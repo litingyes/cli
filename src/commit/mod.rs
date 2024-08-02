@@ -1,63 +1,19 @@
+mod types;
+
+use crate::config::get_config;
 use console::style;
 use inquire::{required, InquireError, Select, Text};
-use std::fmt::{Display, Formatter};
 use std::process::{exit, Command};
 
-struct CommitMessage {
-    r#type: String,
-    scope: String,
-    subject: String,
-}
-
-impl CommitMessage {
-    fn new() -> Self {
-        CommitMessage {
-            r#type: String::new(),
-            scope: String::new(),
-            subject: String::new(),
-        }
-    }
-
-    fn set_type(&mut self, value: String) {
-        self.r#type = value
-    }
-
-    fn set_scope(&mut self, value: String) {
-        self.scope = value
-    }
-
-    fn set_subject(&mut self, value: String) {
-        self.subject = value
-    }
-
-    fn to_string(&self) -> String {
-        if self.scope.trim().is_empty() {
-            format!("{}: {}", self.r#type, self.subject)
-        } else {
-            format!("{}({}): {}", self.r#type, self.scope, self.subject)
-        }
-    }
-}
-
-impl Display for CommitMessage {
-    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        writeln!(f, "Commit Message:").expect("Error: display CommitMessage");
-        writeln!(f, "type: {}", self.r#type).expect("Error: display type filed in CommitMessage");
-        writeln!(f, "scope: {}", self.scope).expect("Error: display scope filed in CommitMessage");
-        writeln!(f, "subject: {}", self.subject)
-            .expect("Error: display subject filed in CommitMessage");
-
-        Ok(())
-    }
-}
-
 pub fn handle_commit() {
-    let mut commit_message = CommitMessage::new();
+    let mut commit_message = types::CommitMessage::new();
+    let config = get_config();
 
-    let types: Vec<&str> = vec![
-        "feat", "fix", "docs", "style", "refactor", "perf", "test", "build", "ci", "chore",
-        "revert",
-    ];
+    let types = config
+        .types
+        .iter()
+        .map(|item| item.key.to_string())
+        .collect();
     let r#type = Select::new("Select the type of change that you're committing: ", types)
         .with_help_message("↑↓ to move, enter to select, type to filter (control + D to exit)")
         .prompt();

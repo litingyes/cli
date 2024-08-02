@@ -1,0 +1,43 @@
+[[types]]
+key = "feat"
+description = "A new feature"
+
+[[types]]
+key = "fix"
+description = "A bug fix"
+
+[[types]]
+key = "style"
+description = "Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)"
+
+[[types]]
+key = "perf"
+description = "A code change that improves performance"
+
+[[types]]
+key = "chore"
+description = "Other changes that don't modify src or test files"
+
+[[types]]
+key = "docs"
+description = "Documentation only changes"
+
+[[types]]
+key = "build"
+description = "Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)"
+
+[[types]]
+key = "ci"
+description = "Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)"
+
+[[types]]
+key = "test"
+description = "Adding missing tests or correcting existing tests"
+
+[[types]]
+key = "refactor"
+description = "A code change that neither fixes a bug nor adds a feature"
+
+[[types]]
+key = "revert"
+description = "Reverts a previous commit"
