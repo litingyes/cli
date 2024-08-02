@@ -11,8 +11,8 @@ keywords = ["cli", "commit"]
 categories = ["command-line-utilities"]
 
 [dependencies]
-clap = { version = "4.5.4", features = ["derive"] }
+clap = { version = "4.5.13", features = ["derive"] }
 console = "0.15.8"
-inquire = "0.7.4"
+inquire = "0.7.5"
 config = "0.14.0"
 serde = { version = "1.0.204", features = ["derive"] }
