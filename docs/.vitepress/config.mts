@@ -26,6 +26,20 @@ export default defineConfig({
                                 link: "/guide/intro"
                             }
                         ]
+                    },
+                    {
+                        text: "Commands",
+                        link: "/commands/commit",
+                        items: [
+                            {
+                                text: "Commit",
+                                link: "/commands/commit"
+                            },
+                            {
+                                text: "Config",
+                                link: "/commands/config"
+                            }
+                        ]
                     }
                 ]
             }
@@ -42,6 +56,20 @@ export default defineConfig({
                             {
                                 text: "简介",
                                 link: "/zh/guide/intro"
+                            }
+                        ]
+                    },
+                    {
+                        text: "Commands",
+                        link: "/zh/commands/commit",
+                        items: [
+                            {
+                                text: "Commit",
+                                link: "/zh/commands/commit"
+                            },
+                            {
+                                text: "Config",
+                                link: "/zh/commands/config"
                             }
                         ]
                     }
