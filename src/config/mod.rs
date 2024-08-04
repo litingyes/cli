@@ -34,13 +34,15 @@ pub struct LitingConfig {
 }
 
 pub fn get_config() -> LitingConfig {
+    let mut default_config_path = Path::new(file!()).parent().unwrap().to_path_buf();
+    default_config_path.push("liting.default.json");
     let mut global_config_path = PathBuf::from(dirs::home_dir().unwrap());
     global_config_path.push("liting");
     let mut local_config_path = PathBuf::from(current_dir().unwrap());
     local_config_path.push("liting");
 
     let config = Config::builder()
-        .add_source(File::with_name("src/config/liting.default"))
+        .add_source(File::from(default_config_path.as_path()))
         .add_source(
             File::from(Path::new(
                 global_config_path
