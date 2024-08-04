@@ -17,3 +17,4 @@ console = "0.15.8"
 inquire = "0.7.5"
 config = "0.14.0"
 serde = { version = "1.0.204", features = ["derive"] }
+dirs = "5.0.1"

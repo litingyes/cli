@@ -1,0 +1,48 @@
+{
+  "types": [
+    {
+      "key": "feat",
+      "description": "A new feature"
+    },
+    {
+      "key": "fix",
+      "description": "A bug fix"
+    },
+    {
+      "key": "style",
+      "description": "Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)"
+    },
+    {
+      "key": "perf",
+      "description": "A code change that improves performance"
+    },
+    {
+      "key": "chore",
+      "description": "Other changes that don't modify src or test files\""
+    },
+    {
+      "key": "docs",
+      "description": "Documentation only changes"
+    },
+    {
+      "key": "build",
+      "description": "Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)"
+    },
+    {
+      "key": "ci",
+      "description": "Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)"
+    },
+    {
+      "key": "test",
+      "description": "Adding missing tests or correcting existing tests"
+    },
+    {
+      "key": "refactor",
+      "description": "A code change that neither fixes a bug nor adds a feature"
+    },
+    {
+      "key": "revert",
+      "description": "Reverts a previous commit"
+    }
+  ]
+}
