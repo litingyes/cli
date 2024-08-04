@@ -1,7 +1,7 @@
 use std::process::{Command, exit};
 
 use console::style;
-use inquire::{InquireError, required, Select, Text};
+use inquire::{Confirm, InquireError, required, Select, Text};
 
 use crate::config::get_config;
 
@@ -47,6 +47,15 @@ pub fn handle_commit() {
         .prompt();
     match subject {
         Ok(subject) => commit_message.set_subject(subject),
+        Err(err) => handle_inquire_error(err),
+    }
+
+    let has_break_change = Confirm::new("Does this commit contain break change ? (default: No)")
+        .with_default(false)
+        .with_help_message("Ctrl-C to exit")
+        .prompt();
+    match has_break_change {
+        Ok(has_break_change) => commit_message.set_has_break_change(has_break_change),
         Err(err) => handle_inquire_error(err),
     }
 

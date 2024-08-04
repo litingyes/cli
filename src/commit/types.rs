@@ -4,6 +4,7 @@ pub struct CommitMessage {
     r#type: String,
     scope: String,
     subject: String,
+    has_break_change: bool,
 }
 
 impl CommitMessage {
@@ -12,6 +13,7 @@ impl CommitMessage {
             r#type: String::new(),
             scope: String::new(),
             subject: String::new(),
+            has_break_change: false,
         }
     }
 
@@ -27,12 +29,23 @@ impl CommitMessage {
         self.subject = value
     }
 
+    pub fn set_has_break_change(&mut self, value: bool) {
+        self.has_break_change = value
+    }
+
     pub fn to_string(&self) -> String {
-        if self.scope.trim().is_empty() {
-            format!("{}: {}", self.r#type, self.subject)
-        } else {
-            format!("{}({}): {}", self.r#type, self.scope, self.subject)
+        let mut commit_msg = self.r#type.to_string();
+
+        if !self.scope.trim().is_empty() {
+            commit_msg.push_str(format!("({})", self.scope.as_str()).as_str())
         }
+        if self.has_break_change == true {
+            commit_msg.push_str("!")
+        }
+        commit_msg.push_str(": ");
+        commit_msg.push_str(self.subject.as_str());
+
+        commit_msg
     }
 }
 
