@@ -1,9 +1,11 @@
-mod types;
+use std::process::{Command, exit};
+
+use console::style;
+use inquire::{InquireError, required, Select, Text};
 
 use crate::config::get_config;
-use console::style;
-use inquire::{required, InquireError, Select, Text};
-use std::process::{exit, Command};
+
+mod types;
 
 fn handle_inquire_error(err: InquireError) {
     match err {
@@ -18,17 +20,15 @@ pub fn handle_commit() {
     let mut commit_message = types::CommitMessage::new();
     let config = get_config();
 
-    let types = config
-        .types
-        .iter()
-        .map(|item| item.key.to_string())
-        .collect();
-    let r#type = Select::new("Select the type of change that you're committing: ", types)
-        .with_help_message("↑↓ to move, enter to select, type to filter (Ctrl-C to exit)")
-        .prompt();
+    let r#type = Select::new(
+        "Select the type of change that you're committing: ",
+        config.types,
+    )
+    .with_help_message("↑↓ to move, enter to select, type to filter (Ctrl-C to exit)")
+    .prompt();
     match r#type {
         Ok(r#type) => {
-            commit_message.set_type(r#type.to_string());
+            commit_message.set_type(r#type.key);
         }
         Err(err) => handle_inquire_error(err),
     }

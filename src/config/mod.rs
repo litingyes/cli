@@ -1,15 +1,26 @@
 use std::env::current_dir;
 use std::fmt;
-use std::fmt::Formatter;
+use std::fmt::{Display, Formatter};
 use std::path::{Path, PathBuf};
 
 use config::{Config, File};
+use console::style;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
 pub struct LitingConfigType {
     pub key: String,
     pub description: String,
+}
+impl Display for LitingConfigType {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        write!(
+            f,
+            "{}: {}",
+            style(self.key.to_string()).bright().bold(),
+            style(self.description.to_string()).dim().italic()
+        )
+    }
 }
 impl fmt::Debug for LitingConfigType {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
