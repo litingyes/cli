@@ -8,11 +8,11 @@ use console::style;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
-pub struct LitingConfigType {
+pub struct LitingConfigCommitType {
     pub key: String,
     pub description: String,
 }
-impl Display for LitingConfigType {
+impl Display for LitingConfigCommitType {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         write!(
             f,
@@ -22,15 +22,20 @@ impl Display for LitingConfigType {
         )
     }
 }
-impl fmt::Debug for LitingConfigType {
+impl fmt::Debug for LitingConfigCommitType {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         writeln!(f, "Key: {} -- Description: {}", self.key, self.description)
     }
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct LitingConfigCommit {
+    pub types: Vec<LitingConfigCommitType>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct LitingConfig {
-    pub types: Vec<LitingConfigType>,
+    pub commit: LitingConfigCommit,
 }
 
 pub fn get_config() -> LitingConfig {

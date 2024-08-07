@@ -1,7 +1,7 @@
-use std::process::{Command, exit};
+use std::process::{exit, Command};
 
 use console::style;
-use inquire::{Confirm, InquireError, required, Select, Text};
+use inquire::{required, Confirm, InquireError, Select, Text};
 
 use crate::config::get_config;
 
@@ -22,7 +22,7 @@ pub fn handle_commit() {
 
     let r#type = Select::new(
         "Select the type of change that you're committing: ",
-        config.types,
+        config.commit.types,
     )
     .with_help_message("↑↓ to move, enter to select, type to filter (Ctrl-C to exit)")
     .prompt();
