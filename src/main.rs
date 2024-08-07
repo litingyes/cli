@@ -31,7 +31,7 @@ fn main() {
         }
         Some(Commands::Config { list }) => {
             if *list {
-                println!("{:?}", config::get_config())
+                println!("{}", config::get_config())
             }
         }
         None => {}

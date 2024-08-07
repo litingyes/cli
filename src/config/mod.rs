@@ -1,19 +1,18 @@
 use std::env::current_dir;
-use std::fmt;
-use std::fmt::{Display, Formatter};
+use std::fmt::{Debug, Display, Formatter, Result};
 use std::path::{Path, PathBuf};
 
 use config::{Config, File};
 use console::style;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct LitingConfigCommitType {
     pub key: String,
     pub description: String,
 }
 impl Display for LitingConfigCommitType {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
         write!(
             f,
             "{}: {}",
@@ -22,20 +21,29 @@ impl Display for LitingConfigCommitType {
         )
     }
 }
-impl fmt::Debug for LitingConfigCommitType {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+impl Debug for LitingConfigCommitType {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
         writeln!(f, "Key: {} -- Description: {}", self.key, self.description)
     }
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct LitingConfigCommit {
     pub types: Vec<LitingConfigCommitType>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize)]
 pub struct LitingConfig {
     pub commit: LitingConfigCommit,
+}
+impl Display for LitingConfig {
+    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
+        writeln!(f, "--- Liting Config ---").unwrap();
+        for item in self.commit.types.clone().into_iter() {
+            writeln!(f, "Commit type: {}", item).unwrap();
+        }
+        write!(f, "--- Liting Config ---")
+    }
 }
 
 pub fn get_config() -> LitingConfig {
